@@ -28,6 +28,14 @@ app.get('/info', (req, res) => {
     });
 });
 
+app.get('/oi', (req, res) => {
+    res.json({
+        nome: 'Minha API REST',
+        versao: '1.0.0',
+        autor: 'Seu Nome'
+    });
+});
+
 // 7. Iniciar servidor
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
