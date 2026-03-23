@@ -17,6 +17,12 @@ GET /api/livros
 Lista todos os livros cadastrados
 http://localhost:3000/api/livros
 
+Parametros opcionais:
+- genero: filtra por genero. Ex: ?genero=Fantasia
+- ordem: ordena por titulo ou nota. Ex: ?ordem=nota
+- direcao: asc ou desc. Ex: ?direcao=desc
+- pagina e limite: para paginacao. Ex: ?pagina=1&limite=5
+
 GET /api/livros/:id
 Busca um livro pelo id
 http://localhost:3000/api/livros/1

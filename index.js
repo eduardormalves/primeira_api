@@ -21,9 +21,42 @@ let livros = [
 
 let proximoId = 13;
 
-// GET /api/livros - Listar todos
+// GET /api/livros - Listar todos com filtro, ordenação e paginação
 app.get('/api/livros', (req, res) => {
-    res.json(livros);
+    const { genero, ordem, direcao, pagina = 1, limite = 10 } = req.query;
+
+    let resultado = livros;
+
+    // Filtro por genero
+    if (genero) resultado = resultado.filter(l => l.genero === genero);
+
+    // Ordenação
+    if (ordem) {
+        resultado = resultado.sort((a, b) => {
+            if (ordem === 'nota') {
+                return direcao === 'desc' ? b.nota - a.nota : a.nota - b.nota;
+            }
+            if (ordem === 'titulo') {
+                return direcao === 'desc' ? b.titulo.localeCompare(a.titulo) : a.titulo.localeCompare(b.titulo);
+            }
+        });
+    }
+
+    // Paginação
+    const paginaNum = parseInt(pagina);
+    const limiteNum = parseInt(limite);
+    const inicio = (paginaNum - 1) * limiteNum;
+    const paginado = resultado.slice(inicio, inicio + limiteNum);
+
+    res.json({
+        dados: paginado,
+        paginacao: {
+            pagina_atual: paginaNum,
+            itens_por_pagina: limiteNum,
+            total_itens: resultado.length,
+            total_paginas: Math.ceil(resultado.length / limiteNum)
+        }
+    });
 });
 
 // GET /api/livros/:id - Buscar por ID
