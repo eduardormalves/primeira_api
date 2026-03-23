@@ -30,7 +30,7 @@ app.get('/api/livros', (req, res) => {
     // Filtro por genero
     if (genero) resultado = resultado.filter(l => l.genero === genero);
 
-    // Ordenação
+    // ordenação
     if (ordem) {
         resultado = resultado.sort((a, b) => {
             if (ordem === 'nota') {
@@ -42,7 +42,7 @@ app.get('/api/livros', (req, res) => {
         });
     }
 
-    // Paginação
+    // paginação
     const paginaNum = parseInt(pagina);
     const limiteNum = parseInt(limite);
     const inicio = (paginaNum - 1) * limiteNum;
@@ -59,14 +59,14 @@ app.get('/api/livros', (req, res) => {
     });
 });
 
-// GET /api/livros/:id - Buscar por ID
+// GET /api/livros/:id - buscar por id
 app.get('/api/livros/:id', (req, res) => {
     const livro = livros.find(l => l.id === parseInt(req.params.id));
     if (!livro) return res.status(404).json({ erro: "Livro não encontrado" });
     res.json(livro);
 });
 
-// POST /api/livros - Criar novo
+// POST /api/livros - criar novo
 app.post('/api/livros', (req, res) => {
     const { titulo, autor, ano, genero, nota } = req.body;
 
@@ -79,7 +79,7 @@ app.post('/api/livros', (req, res) => {
     res.status(201).json(novoLivro);
 });
 
-// PUT /api/livros/:id - Atualizar
+// PUT /api/livros/:id - atualizar
 app.put('/api/livros/:id', (req, res) => {
     const livro = livros.find(l => l.id === parseInt(req.params.id));
     if (!livro) return res.status(404).json({ erro: "Livro não encontrado" });
@@ -97,7 +97,7 @@ app.put('/api/livros/:id', (req, res) => {
     res.json(livro);
 });
 
-// DELETE /api/livros/:id - Remover
+// DELETE /api/livros/:id - remover
 app.delete('/api/livros/:id', (req, res) => {
     const index = livros.findIndex(l => l.id === parseInt(req.params.id));
     if (index === -1) return res.status(404).json({ erro: "Livro não encontrado" });
@@ -106,4 +106,4 @@ app.delete('/api/livros/:id', (req, res) => {
     res.status(204).send();
 });
 
-app.listen(3000, () => console.log('🚀 API CRUD completa na porta 3000'));
+app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
